@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "f35b54cf-6027-47bb-b75e-fc809db9c102",
+		"name": "Calories",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetMeals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/meals/2000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meals",
+						"2000"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "StoreMeals",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"meals\": [\n        {\n            \"name\": \"Steamed Rice with Veggies\",\n            \"calories\": 1000\n        },\n        {\n            \"name\": \"Sushi Platter\",\n            \"calories\": 600\n        },\n        {\n            \"name\": \"Sandwich\",\n            \"calories\": 400\n        }\n    ],\n    \"date\": \"09-06-2020\",\n    \"userid\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/meals/store",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meals",
+						"store"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserMeals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/meals/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"meals",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

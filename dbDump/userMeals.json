@@ -1,0 +1,61 @@
+[{
+  "_id": {
+    "$oid": "5edd098318af07e786e4588a"
+  },
+  "meals": [
+    {
+      "name": "Steamed Rice with Veggies",
+      "calories": 1000
+    },
+    {
+      "name": "Sushi Platter",
+      "calories": 600
+    },
+    {
+      "name": "Sandwich",
+      "calories": 400
+    }
+  ],
+  "date": "07-06-2020",
+  "userid": 1
+},{
+  "_id": {
+    "$oid": "5edd174e17ab1a50e3126fef"
+  },
+  "meals": [
+    {
+      "name": "Steamed Rice with Veggies",
+      "calories": 1000
+    },
+    {
+      "name": "Sushi Platter",
+      "calories": 600
+    },
+    {
+      "name": "Sandwich",
+      "calories": 400
+    }
+  ],
+  "date": "08-06-2020",
+  "userid": 1
+},{
+  "_id": {
+    "$oid": "5edd175517ab1a50e3126ff0"
+  },
+  "meals": [
+    {
+      "name": "Steamed Rice with Veggies",
+      "calories": 1000
+    },
+    {
+      "name": "Sushi Platter",
+      "calories": 600
+    },
+    {
+      "name": "Sandwich",
+      "calories": 400
+    }
+  ],
+  "date": "09-06-2020",
+  "userid": 1
+}]

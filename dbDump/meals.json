@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "5edba5e19abbc54038211473"
+  },
+  "name": "Sandwich",
+  "calories": 400
+},{
+  "_id": {
+    "$oid": "5edba60c9abbc54038211474"
+  },
+  "name": "Chicken Rice",
+  "calories": 800
+},{
+  "_id": {
+    "$oid": "5edba6299abbc54038211475"
+  },
+  "name": "Butter Chicken and Naan",
+  "calories": 900
+},{
+  "_id": {
+    "$oid": "5edba6689abbc54038211476"
+  },
+  "name": "Sushi Platter",
+  "calories": 600
+},{
+  "_id": {
+    "$oid": "5edba6a99abbc54038211477"
+  },
+  "name": "Steamed Rice with Veggies",
+  "calories": 1000
+},{
+  "_id": {
+    "$oid": "5edba6c19abbc54038211478"
+  },
+  "name": "Roasted Chicken",
+  "calories": 1200
+}]
