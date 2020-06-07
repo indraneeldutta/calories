@@ -16,7 +16,6 @@ func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/meals/{calorie}", handleMeals).Methods("GET")
 	router.HandleFunc("/meals/store", handleStoreMeals).Methods("POST")
-	router.HandleFunc("/user/meals/{userid}", handleStoreMeals).Methods("GET")
 	log.Fatal(http.ListenAndServe(os.Getenv("PORT"), router))
 }
 
@@ -44,14 +43,6 @@ func handleStoreMeals(w http.ResponseWriter, r *http.Request) {
 	}
 
 	response := StoreMeals(context.Background(), reqBody)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(response.Status)
-	json.NewEncoder(w).Encode(response)
-}
-
-func handleGetUserMeals(w http.ResponseWriter, r *http.Request) {
-	userID, _ := strconv.ParseInt(mux.Vars(r)["userid"], 2, 64)
-	response := GetUserMeals(context.Background(), userID)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(response.Status)
 	json.NewEncoder(w).Encode(response)
