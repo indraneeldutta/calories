@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -32,6 +33,15 @@ type RequestStoreMeals struct {
 type ResponseStoreMeals struct {
 	Status int    `json:"status"`
 	Body   string `json:"body"`
+}
+
+type RequestUserMeals struct {
+	UserID int64 `json:"userid"`
+}
+
+type ResponseUserMeals struct {
+	Status int                 `json:"status"`
+	Body   []RequestStoreMeals `json:"Body"`
 }
 
 // GetMeals returns all the meals from DB
@@ -89,5 +99,33 @@ func StoreMeals(ctx context.Context, request RequestStoreMeals) ResponseStoreMea
 	return ResponseStoreMeals{
 		Status: http.StatusOK,
 		Body:   "Successfully stored meals",
+	}
+}
+
+func GetUserMeals(ctx context.Context, userID int64) ResponseUserMeals {
+	client := GetClient()
+
+	collection, err := client.Database("calories").Collection("userMeals").Find(ctx, primitive.M{"userid": userID})
+
+	if err != nil {
+		log.Fatal("somethings")
+	}
+
+	var result []RequestStoreMeals
+
+	for collection.Next(context.TODO()) {
+		var single RequestStoreMeals
+		err := collection.Decode(&single)
+		if err != nil {
+			log.Fatal("somethingss")
+		}
+		result = append(result, single)
+	}
+
+	fmt.Println(result)
+
+	return ResponseUserMeals{
+		Status: http.StatusOK,
+		Body:   result,
 	}
 }
