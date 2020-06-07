@@ -6,23 +6,21 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
 
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
-	router.HandleFunc("/meals", handleMeals).Methods("GET")
+	router.HandleFunc("/meals/{calorie}", handleMeals).Methods("GET")
 	log.Fatal(http.ListenAndServe(os.Getenv("PORT"), router))
 }
 
 func handleMeals(w http.ResponseWriter, r *http.Request) {
-	response := GetMeals(context.Background())
+	calorie, _ := strconv.ParseFloat(mux.Vars(r)["calorie"], 64)
+	response := GetMeals(context.Background(), calorie)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	if response.Body == nil {
-		json.NewEncoder(w).Encode("No movies found")
-	} else {
-		json.NewEncoder(w).Encode(response)
-	}
+	json.NewEncoder(w).Encode(response)
 }
