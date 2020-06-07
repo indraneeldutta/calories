@@ -34,6 +34,17 @@ type ResponseStoreMeals struct {
 	Body   string `json:"body"`
 }
 
+// RequestUserMeals defines the structure of request for getting user details
+type RequestUserMeals struct {
+	UserID int64 `json:"userid"`
+}
+
+// ResponseUserMeals defines the structure of response sent for user meals
+type ResponseUserMeals struct {
+	Status int                 `json:"status"`
+	Body   []RequestStoreMeals `json:"Body"`
+}
+
 // GetMeals returns all the meals from DB
 func GetMeals(ctx context.Context, calories float64) ResponseMeals {
 	client := GetClient()
@@ -43,15 +54,16 @@ func GetMeals(ctx context.Context, calories float64) ResponseMeals {
 
 	var meals []Meals
 	if err = cursor.All(ctx, &meals); err != nil {
-		log.Fatal(err)
+		return ResponseMeals{
+			Status: http.StatusInternalServerError,
+			Body:   meals,
+		}
 	}
 
-	response := ResponseMeals{
+	return ResponseMeals{
 		Status: http.StatusOK,
 		Body:   meals,
 	}
-
-	return response
 }
 
 // StoreMeals stores the meals selected for the particular day
@@ -89,5 +101,35 @@ func StoreMeals(ctx context.Context, request RequestStoreMeals) ResponseStoreMea
 	return ResponseStoreMeals{
 		Status: http.StatusOK,
 		Body:   "Successfully stored meals",
+	}
+}
+
+// GetUserMeals returns the meals with details per user
+func GetUserMeals(ctx context.Context, userID int64) ResponseUserMeals {
+	client := GetClient()
+
+	collection, err := client.Database("calories").Collection("userMeals").Find(ctx, primitive.M{"userid": userID})
+
+	if err != nil {
+		log.Fatal("somethings")
+	}
+
+	var result []RequestStoreMeals
+
+	for collection.Next(context.TODO()) {
+		var single RequestStoreMeals
+		err := collection.Decode(&single)
+		if err != nil {
+			return ResponseUserMeals{
+				Status: http.StatusInternalServerError,
+				Body:   result,
+			}
+		}
+		result = append(result, single)
+	}
+
+	return ResponseUserMeals{
+		Status: http.StatusOK,
+		Body:   result,
 	}
 }
