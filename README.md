@@ -15,7 +15,7 @@ The program uses MongoDB as its database. The DB Dumps can be found in `dbDump` 
 1. Change the connection string in `.env` to your Mongo instance.
 2. Make sure to install dependencies to run the program. Run `make deps`
 OR manually install the deps by running
-`go get -u go.mongodb.org/mongo-driver/mongo` and `go get -u github.com/gorilla/mux` 
+`go get -u go.mongodb.org/mongo-driver/mongo` and `go get -u github.com/gorilla/mux` and `go get -u github.com/joho/godotenv`
 3. run `make build` OR `go build -o bin/main`
 4. run `make run` OR `./bin/main`
 
