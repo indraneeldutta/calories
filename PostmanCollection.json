@@ -32,7 +32,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"meals\": [\n        {\n            \"name\": \"Steamed Rice with Veggies\",\n            \"calories\": 1000\n        },\n        {\n            \"name\": \"Sushi Platter\",\n            \"calories\": 600\n        },\n        {\n            \"name\": \"Sandwich\",\n            \"calories\": 400\n        }\n    ],\n    \"date\": \"09-06-2020\",\n    \"userid\": 1\n}",
+					"raw": "{\n    \"meals\": [\n        {\n            \"title\": \"Steamed Rice with Veggies\"\n        },\n        {\n            \"title\": \"Sushi Platter\"\n        },\n        {\n            \"title\": \"Sandwich\"\n        }\n    ],\n    \"date\": \"09-06-2020\",\n    \"userid\": 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
