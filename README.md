@@ -34,7 +34,8 @@ OR manually install the deps by running
 `go get -u go.mongodb.org/mongo-driver/mongo` and `go get -u github.com/gorilla/mux` and `go get -u github.com/joho/godotenv`
 3. run `make build` OR `go build -o bin/main`
 4. run `make run` OR `./bin/main`
-5. The API Key and URL are stored in the `.env` file. You can change to your credentials or use the same. 
+
+Note: The API Key and URL are stored in the `.env` file. You can change to your credentials or use the same. 
 
 
 ## Usage
