@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -76,14 +77,14 @@ func StoreMeals(ctx context.Context, request RequestStoreMeals) ResponseStoreMea
 	client := GetClient()
 
 	var check bson.M
-	collection := client.Database("calories").Collection("userMeals").FindOne(ctx, primitive.M{"userid": request.UserID, "date": request.Date})
+	collection := client.Database(os.Getenv("DB_NAME")).Collection(os.Getenv("COLL_NAME")).FindOne(ctx, primitive.M{"userid": request.UserID, "date": request.Date})
 
 	err := collection.Decode(&check)
 
 	if err != nil {
-		_, err = client.Database("calories").Collection("userMeals").InsertOne(ctx, request)
+		_, err = client.Database(os.Getenv("DB_NAME")).Collection(os.Getenv("COLL_NAME")).InsertOne(ctx, request)
 	} else {
-		collection := client.Database("calories").Collection("userMeals")
+		collection := client.Database(os.Getenv("DB_NAME")).Collection(os.Getenv("COLL_NAME"))
 		_, err = collection.UpdateOne(
 			context.TODO(),
 			primitive.M{
@@ -113,7 +114,7 @@ func StoreMeals(ctx context.Context, request RequestStoreMeals) ResponseStoreMea
 func GetUserMeals(ctx context.Context, userID int64) ResponseUserMeals {
 	client := GetClient()
 
-	collection, err := client.Database("calories").Collection("userMeals").Find(ctx, primitive.M{"userid": userID})
+	collection, err := client.Database(os.Getenv("DB_NAME")).Collection(os.Getenv("COLL_NAME")).Find(ctx, primitive.M{"userid": userID})
 
 	if err != nil {
 		log.Fatal("somethings")

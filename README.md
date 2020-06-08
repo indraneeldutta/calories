@@ -10,7 +10,23 @@ Below are the REST APIs created for calories
 
 Clone this repo
 
-The program uses MongoDB as its database. The DB Dumps can be found in `dbDump` folder in JSON format. Consists of two collections `meals` and `userMeals` with prepopulated data. Feel free to edit the data before import.
+The program uses MongoDB as its database. The DB Dumps can be found in `dbDump` folder in JSON format. Consists of collection `userMeals` with prepopulated data. Feel free to edit the data before import.
+
+## Setting up MongoDB
+
+To setup MongoDB on your local machine follow the steps at `https://docs.mongodb.com/guides/server/install/` 
+
+To setup MongoDB Compass (GUI for Mongo):
+1. Go to `https://www.mongodb.com/try/download/compass` and download the installer and install it.
+2. Open MongoDB Compass.
+3. Connect to your MongoDB Server by entering the connection string in New Connection.
+4. Once connected, Click on `Create Database` at the left bottom corner `+` sign.
+5. Name the Database `calories` (you can have custom name as well, make sure to change it in `.env` file)
+6. Name the collection `userMeals` (you can have custom name as well, make sure to change it in `.env` file)
+7. On the left navigation bar, select the created Database, select the collection.
+8. On top navigation bar -> Collection -> Import Data -> Select the JSON file from dbDump folder `userMeals.json` -> import
+
+## Project Setup
 
 1. Change the connection string in `.env` to your Mongo instance.
 2. Make sure to install dependencies to run the program. Run `make deps`
