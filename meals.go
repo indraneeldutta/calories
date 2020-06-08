@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -9,23 +11,24 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Meals defines the structure of meals object
-type Meals struct {
-	Name     string  `json:"name"`
-	Calories float64 `json:"calories"`
+// Meal defines the structure of meals object
+type Meal struct {
+	Name string `json:"title"`
 }
 
-// ResponseMeals defines the structure for Response sent for GetMeals
-type ResponseMeals struct {
-	Status int     `json:"status"`
-	Body   []Meals `json:"body"`
+// ResponseGetMeals defines the structure of response received from API
+type ResponseGetMeals struct {
+	Meals     []Meal `json:"meals"`
+	Nutrients struct {
+		Calories float64 `json:"calories"`
+	} `json:"nutrients"`
 }
 
 // RequestStoreMeals defined structure of request sent for storing meals
 type RequestStoreMeals struct {
-	Meals  []Meals `json:"meals"`
-	Date   string  `json:"date"`
-	UserID int64   `json:"userid"`
+	Meals  []Meal `json:"meals"`
+	Date   string `json:"date"`
+	UserID int64  `json:"userid"`
 }
 
 // ResponseStoreMeals defines the structure for response sent for storing meals
@@ -45,25 +48,27 @@ type ResponseUserMeals struct {
 	Body   []RequestStoreMeals `json:"Body"`
 }
 
-// GetMeals returns all the meals from DB
-func GetMeals(ctx context.Context, calories float64) ResponseMeals {
-	client := GetClient()
+// GetMeals returns set of meals based on the calories
+func GetMeals(ctx context.Context, calories string) ResponseGetMeals {
 
-	pipeline := []bson.D{primitive.D{{"$sample", primitive.D{{"size", 3}}}}}
-	cursor, err := client.Database("calories").Collection("meals").Aggregate(ctx, pipeline)
+	url := "https://api.spoonacular.com/mealplanner/generate?" + "apiKey=797b9554c0bd4543be9a2d1d0b165563" + "&targetCalories=" + calories + "&timeFrame=day"
 
-	var meals []Meals
-	if err = cursor.All(ctx, &meals); err != nil {
-		return ResponseMeals{
-			Status: http.StatusInternalServerError,
-			Body:   meals,
-		}
+	req, _ := http.NewRequest("GET", url, nil)
+
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	return ResponseMeals{
-		Status: http.StatusOK,
-		Body:   meals,
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	var response ResponseGetMeals
+	if err = json.Unmarshal(body, &response); err != nil {
+		return response
 	}
+
+	return response
 }
 
 // StoreMeals stores the meals selected for the particular day
