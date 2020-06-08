@@ -52,8 +52,7 @@ type ResponseUserMeals struct {
 // GetMeals returns set of meals based on the calories
 func GetMeals(ctx context.Context, calories string) ResponseGetMeals {
 
-	url := "https://api.spoonacular.com/mealplanner/generate?" + "apiKey=797b9554c0bd4543be9a2d1d0b165563" + "&targetCalories=" + calories + "&timeFrame=day"
-
+	url := os.Getenv("API_BASE_URL") + os.Getenv("API_KEY") + "&targetCalories=" + calories + "&timeFrame=day"
 	req, _ := http.NewRequest("GET", url, nil)
 
 	res, err := http.DefaultClient.Do(req)
